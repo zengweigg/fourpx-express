@@ -60,6 +60,7 @@ func NewFourService(cfg config.Config) *FourClient {
 				param = string(bd)
 			}
 			timestamp := strconv.FormatInt(time.Now().UnixMilli(), 10)
+			fmt.Println("时间戳：", timestamp)
 			sign, err := GetSign(param, request.URL, cfg.APIKey, cfg.APISecret, timestamp)
 			if err != nil {
 				return err
@@ -71,7 +72,7 @@ func NewFourService(cfg config.Config) *FourClient {
 				"method":    request.URL,
 				"sign":      sign,
 				"timestamp": timestamp,
-				"v":         Version,
+				"v":         cfg.Version,
 			})
 			request.URL = ""
 			return nil

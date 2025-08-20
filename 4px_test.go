@@ -11,12 +11,10 @@ func Test001(m *testing.T) {
 	// 初始化
 	cfg := config.LoadConfig()
 	fourClient := NewFourService(*cfg)
-
 	// 构造测试请求数据
 	postData := model.OrderLabelPost{
-		RequestNo: "12345678",
+		RequestNo: "4PX3001957565250CN",
 	}
-
 	// 获取标签
 	resp, err := fourClient.Services.Order.GetLabelList(postData)
 	if err != nil {

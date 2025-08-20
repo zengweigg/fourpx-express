@@ -1,17 +1,6 @@
 package model
 
-type Response struct {
-	Result string          `json:"result"`           // 结果值；0标识失败，1标识成功
-	Msg    string          `json:"msg"`              // 响应信息
-	Errors []ErrorResponse `json:"errors,omitempty"` // 错误信息
-}
-
-type ErrorResponse struct {
-	ErrorCode     string `json:"error_code"`               // 错误代码
-	ErrorMsg      string `json:"error_msg"`                // 错误信息
-	ReferenceCode string `json:"reference_code,omitempty"` // 参考代码
-}
-
+// 3. 获取面单 请求参数
 type OrderLabelPost struct {
 	RequestNo              string `json:"request_no"`                          // 请求单号（支持4PX单号、客户单号和面单号）
 	ResponseLabelFormat    string `json:"response_label_format,omitempty"`     // 返回面单的格式（PDF：返回PDF下载链接；IMG：返回IMG图片下载链接）默认为PDF
@@ -26,6 +15,12 @@ type OrderLabelPost struct {
 	BarCodeOrderType       string `json:"bar_code_order_type,omitempty"`       // 指定条码单号类型（0：默认类型；1：4PX单号），默认为0
 }
 
+// 3.获取面单 请响应参数
+type OrderLabelResp struct {
+	Response
+	Data OrderLabelData `json:"data,omitempty"` // 成功的数据
+}
+
 type LabelURLInfo struct {
 	LogisticsLabel string `json:"logistics_label,omitempty"` // 面单链接(①普通客户返回4PX标准物流链接；②特定客户返回物流服务商标签链接)
 	CustomLabel    string `json:"custom_label,omitempty"`    // 报关标签链接(特定客户且特定产品专用)
@@ -37,9 +32,4 @@ type OrderLabelData struct {
 	LabelBarcode      string       `json:"label_barcode"`       // 面单条码(①普通客户返回面单号；②特定客户且特定产品返回物流服务商单号)
 	ChildLabelBarcode []string     `json:"child_label_barcode"` // 子面单号
 	LabelURLInfo      LabelURLInfo `json:"label_url_info,"`     // 标签链接信息
-}
-
-type OrderLabelResp struct {
-	Response
-	Data OrderLabelData `json:"data,omitempty"` // 成功的数据
 }
