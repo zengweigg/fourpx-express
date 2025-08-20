@@ -6,6 +6,7 @@ require (
 	github.com/bytedance/sonic v1.13.3
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/hiscaler/gox v0.0.0-20250228092509-f9ac5d6ae7e3
+	gopkg.in/guregu/null.v4 v4.0.0
 )
 
 require (
