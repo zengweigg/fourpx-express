@@ -21,5 +21,16 @@ func Test001(m *testing.T) {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
+
+	// postData := model.CancelOrderPost{
+	// 	RequestNo:    "3000210210",
+	// 	CancelReason: "TEST",
+	// }
+	// // 取消单号
+	// resp, err := fourClient.Services.Order.CancelOrder(postData)
+	// if err != nil {
+	// 	fmt.Printf("Error: %v\n", err)
+	// 	return
+	// }
 	fmt.Println(resp.Data)
 }

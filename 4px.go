@@ -13,7 +13,6 @@ import (
 )
 
 const (
-	Version   = "1.1.0"
 	userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 )
 
@@ -60,8 +59,12 @@ func NewFourService(cfg config.Config) *FourClient {
 				param = string(bd)
 			}
 			timestamp := strconv.FormatInt(time.Now().UnixMilli(), 10)
-			fmt.Println("时间戳：", timestamp)
-			sign, err := GetSign(param, request.URL, cfg.APIKey, cfg.APISecret, timestamp)
+			// fmt.Println("时间戳：", timestamp)
+			v := cfg.Version
+			if request.URL == "ds.xms.order.cancel" {
+				v = "1.0.0"
+			}
+			sign, err := GetSign(param, request.URL, cfg.APIKey, cfg.APISecret, timestamp, v)
 			if err != nil {
 				return err
 			}
@@ -72,7 +75,7 @@ func NewFourService(cfg config.Config) *FourClient {
 				"method":    request.URL,
 				"sign":      sign,
 				"timestamp": timestamp,
-				"v":         cfg.Version,
+				"v":         v,
 			})
 			request.URL = ""
 			return nil

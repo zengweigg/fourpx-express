@@ -30,12 +30,12 @@ func MD5(s string) string {
 }
 
 // GetSign 消息加密获取签名
-func GetSign(param, method, apiKey, apiSecret, timestamp string) (sign string, err error) {
+func GetSign(param, method, apiKey, apiSecret, timestamp, v string) (sign string, err error) {
 	if param == "" || method == "" || apiKey == "" || apiSecret == "" || timestamp == "" {
 		return "", errors.New("参数不能为空")
 	}
 	var str string
-	str = fmt.Sprintf("app_key%sformatjsonmethod%stimestamp%sv%s%s%s", apiKey, method, timestamp, Version, param, apiSecret)
+	str = fmt.Sprintf("app_key%sformatjsonmethod%stimestamp%sv%s%s%s", apiKey, method, timestamp, v, param, apiSecret)
 	//  MD5加密
 	sign = MD5(str)
 	return sign, nil
