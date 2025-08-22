@@ -71,7 +71,7 @@ func NewFourService(cfg config.Config) *FourClient {
 			request.SetQueryParams(map[string]string{
 				"app_key":   cfg.APIKey,
 				"format":    "json",
-				"language":  "cn",
+				"language":  "en",
 				"method":    request.URL,
 				"sign":      sign,
 				"timestamp": timestamp,
@@ -108,7 +108,7 @@ func NewFourService(cfg config.Config) *FourClient {
 			}
 			return
 		}).
-		SetRetryCount(2).
+		SetRetryCount(1).
 		SetRetryWaitTime(5 * time.Second).
 		SetRetryMaxWaitTime(10 * time.Second).
 		AddRetryCondition(func(r *resty.Response, err error) bool {
