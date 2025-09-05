@@ -38,9 +38,11 @@ func NewFourService(cfg config.Config) *FourClient {
 		New().
 		SetDebug(FourPX.config.Debug).
 		SetHeaders(map[string]string{
-			"Content-Type": "application/json",
-			"Accept":       "application/json",
-			"User-Agent":   userAgent,
+			"Content-Type":    "application/json",
+			"Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+			"Accept-Charset":  "utf-8",
+			"Accept-Language": "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3",
+			"User-Agent":      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
 		})
 	if cfg.Sandbox {
 		httpClient.SetBaseURL("https://open-test.4px.com/router/api/service")
@@ -71,7 +73,7 @@ func NewFourService(cfg config.Config) *FourClient {
 			request.SetQueryParams(map[string]string{
 				"app_key":   cfg.APIKey,
 				"format":    "json",
-				"language":  "en",
+				"language":  "cn",
 				"method":    request.URL,
 				"sign":      sign,
 				"timestamp": timestamp,
