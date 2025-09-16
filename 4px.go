@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"github.com/bytedance/sonic"
 	"github.com/go-resty/resty/v2"
-	"github.com/hiscaler/gox/bytex"
 	"github.com/zengweigg/fourpx-express/config"
-	"github.com/zengweigg/fourpx-express/model"
 	"net/http"
 	"strconv"
 	"time"
@@ -82,35 +80,35 @@ func NewFourService(cfg config.Config) *FourClient {
 			request.URL = ""
 			return nil
 		}).
-		OnAfterResponse(func(client *resty.Client, response *resty.Response) (err error) {
-			if response.IsError() {
-				return fmt.Errorf("%s: %s", response.Status(), bytex.ToString(response.Body()))
-			}
-			contentType := response.RawResponse.Header.Get("Content-Type")
-			if contentType == "application/octet-stream" {
-				return
-			}
-			r := model.Response{}
-			if err = sonic.Unmarshal(response.Body(), &r); err == nil {
-				if r.Result != "1" {
-					return fmt.Errorf("%s: %s", r.Result, r.Msg)
-				}
-				//  自定义响应数据
-				// if r.ApiResultData != "" {
-				// 	ok, err := DecodeMsg(r.ApiResultData, tempToken, cfg.EncodingAesKey, cfg.APIKey)
-				// 	if err == nil {
-				// 		response.SetBody([]byte(ok))
-				// 	}
-				// }
-			} else {
-				FourPX.logger.Errorf("JSON Unmarshal error: %s", err.Error())
-			}
-			if err != nil {
-				FourPX.logger.Errorf("OnAfterResponse error: %s", err.Error())
-			}
-			return
-		}).
-		SetRetryCount(1).
+		// OnAfterResponse(func(client *resty.Client, response *resty.Response) (err error) {
+		// 	if response.IsError() {
+		// 		return fmt.Errorf("%s: %s", response.Status(), bytex.ToString(response.Body()))
+		// 	}
+		// 	contentType := response.RawResponse.Header.Get("Content-Type")
+		// 	if contentType == "application/octet-stream" {
+		// 		return
+		// 	}
+		// 	r := model.Response{}
+		// 	if err = sonic.Unmarshal(response.Body(), &r); err == nil {
+		// 		if r.Result != "1" {
+		// 			return fmt.Errorf("%s: %s", r.Result, r.Msg)
+		// 		}
+		// 		//  自定义响应数据
+		// 		// if r.ApiResultData != "" {
+		// 		// 	ok, err := DecodeMsg(r.ApiResultData, tempToken, cfg.EncodingAesKey, cfg.APIKey)
+		// 		// 	if err == nil {
+		// 		// 		response.SetBody([]byte(ok))
+		// 		// 	}
+		// 		// }
+		// 	} else {
+		// 		FourPX.logger.Errorf("JSON Unmarshal error: %s", err.Error())
+		// 	}
+		// 	if err != nil {
+		// 		FourPX.logger.Errorf("OnAfterResponse error: %s", err.Error())
+		// 	}
+		// 	return
+		// }).
+		SetRetryCount(0).
 		SetRetryWaitTime(5 * time.Second).
 		SetRetryMaxWaitTime(10 * time.Second).
 		AddRetryCondition(func(r *resty.Response, err error) bool {

@@ -28,9 +28,12 @@ func Test001(m *testing.T) {
 	}
 	// 取消单号
 	resp, err := fourClient.Services.Order.CancelOrder(postData)
+
 	if err != nil {
-		fmt.Printf("Error: %v\n", err)
+		// fmt.Println(88888, resp.Errors[0].ErrorMsg)
+		fmt.Println("Error1:", err.Error())
 		return
 	}
+	fmt.Println(resp.Errors[0].ErrorMsg)
 	fmt.Println(resp.Data)
 }

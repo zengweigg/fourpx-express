@@ -1,7 +1,6 @@
 package fourpx_express
 
 import (
-	"fmt"
 	"github.com/bytedance/sonic"
 	"github.com/zengweigg/fourpx-express/model"
 )
@@ -15,7 +14,7 @@ func (s orderService) CreateOrder(postData model.CreateOrderPost) (model.OrderRe
 	resp, err := s.httpClient.R().
 		SetBody(postData).
 		Post("ds.xms.order.create")
-	fmt.Println(string(resp.Body()))
+	// fmt.Println(string(resp.Body()))
 	if err != nil {
 		return respData, err
 	}
@@ -34,7 +33,6 @@ func (s orderService) CancelOrder(postData model.CancelOrderPost) (model.CancelO
 	resp, err := s.httpClient.R().
 		SetBody(postData).
 		Post("ds.xms.order.cancel")
-	fmt.Println(string(resp.Body()))
 	if err != nil {
 		return respData, err
 	}
@@ -53,7 +51,7 @@ func (s orderService) GetLabelList(postData model.OrderLabelPost) (model.OrderLa
 	resp, err := s.httpClient.R().
 		SetBody(postData).
 		Post("ds.xms.label.get")
-	fmt.Println(string(resp.Body()))
+	// fmt.Println(string(resp.Body()))
 	if err != nil {
 		return respData, err
 	}

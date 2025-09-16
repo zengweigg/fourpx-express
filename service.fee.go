@@ -1,7 +1,6 @@
 package fourpx_express
 
 import (
-	"fmt"
 	"github.com/bytedance/sonic"
 	"github.com/zengweigg/fourpx-express/model"
 )
@@ -17,7 +16,7 @@ func (s feeService) GetFreightFee(postData model.GetFreightPost) (model.FreightR
 	resp, err := s.httpClient.R().
 		SetBody(postData).
 		Post("ds.xms.order.getFreight")
-	fmt.Println(string(resp.Body()))
+	// fmt.Println(string(resp.Body()))
 	if err != nil {
 		return respData, err
 	}
